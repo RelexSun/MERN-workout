@@ -24,6 +24,25 @@ const getWorkout = async (req, res) => {
 const createWorkout = async (req, res) => {
   const { title, load, reps } = req.body;
 
+  let empytFields = [];
+
+  if (!title) {
+    empytFields.push("title");
+  }
+
+  if (!load) {
+    empytFields.push("load");
+  }
+
+  if (!reps) {
+    empytFields.push("reps");
+  }
+  if (empytFields.length > 0) {
+    return res
+      .status(400)
+      .json({ error: "Please fill in all the fields", empytFields });
+  }
+
   // add doc to db
   try {
     const workout = await Workout.create({ title, load, reps });
@@ -53,15 +72,18 @@ const deleteWorkout = async (req, res) => {
 
 // update a workout
 const updateWorkout = async (req, res) => {
-  const {id} = req.params;
+  const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "No such workout" });
   }
 
   try {
-    const workout = await Workout.findOneAndUpdate({_id: id}, {
-      ...req.body
-    });
+    const workout = await Workout.findOneAndUpdate(
+      { _id: id },
+      {
+        ...req.body,
+      }
+    );
     if (!workout) {
       return res.status(404).json({ error: "No such workout" });
     }
@@ -76,5 +98,5 @@ module.exports = {
   getWorkout,
   createWorkout,
   deleteWorkout,
-  updateWorkout
+  updateWorkout,
 };
