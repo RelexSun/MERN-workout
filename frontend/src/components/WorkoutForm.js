@@ -22,7 +22,7 @@ const WorkoutForm = () => {
       },
     });
     const json = await response.json();
-    console.log(json.error);
+    console.log(json.emptyFields);
 
     if (!response.ok) {
       setError(json.error);

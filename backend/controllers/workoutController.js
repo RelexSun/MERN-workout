@@ -26,17 +26,18 @@ const createWorkout = async (req, res) => {
 
   let empytFields = [];
 
-  if (!title) {
+  if (title === "") {
     empytFields.push("title");
   }
 
-  if (!load) {
+  if (load === "") {
     empytFields.push("load");
   }
 
-  if (!reps) {
+  if (reps === "") {
     empytFields.push("reps");
   }
+
   if (empytFields.length > 0) {
     return res
       .status(400)
