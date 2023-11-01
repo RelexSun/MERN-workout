@@ -11,7 +11,7 @@ const Sighnup = () => {
 
     await signup(email, password);
   };
-
+  console.log("error", error);
   return (
     <form className="signup" onSubmit={handleSubmit}>
       <h3>Sign up</h3>
@@ -21,12 +21,14 @@ const Sighnup = () => {
         type="email"
         onChange={(e) => setEmail(e.target.value)}
         value={email}
+        required={true}
       />
       <label>Password:</label>
       <input
         type="password"
         onChange={(e) => setPassword(e.target.value)}
         value={password}
+        required={true}
       />
       <button disabled={isLoading}>Sign up</button>
       {error && <div className="error">{error}</div>}
